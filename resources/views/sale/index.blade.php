@@ -32,9 +32,7 @@
             </div>
         </div>
     </form>
-    <div class="card mt-5">
-        <div class="card-body">
-            <h3 class="text-primary">El producto mas vendido es: {{ $bestSeller }}.</h3>
-        </div>
-    </div>
+    @include('info', [
+        'info' => "El producto mas vendido es: $bestSeller"
+    ])
 @endsection

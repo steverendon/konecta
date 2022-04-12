@@ -75,11 +75,9 @@
             </div>
         </div>
     </form>
-    <div class="card mt-2">
-        <div class="card-body">
-            <h3 class="text-primary">Producto con mejor stock: {{ $bestStock->name }}</h3>
-        </div>
-    </div>
+    @include('info', [
+        'info' => "El producto con mas stock es: $bestStock->name"
+    ])
     <table class="table mt-2">
         <thead>
             <tr>

@@ -22,16 +22,6 @@ class SaleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,62 +29,17 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        Sale::create($request->all());
-
         $product = Product::find($request->product_id);
 
-        if ($product->stock >= $request->amount) {
-            $product->stock = $product->stock - $request->amount;
-            $product->save();
-
-            return back();
+        if ($product->stock < $request->amount || $request->amount == 0) {
+            return back()->with('success', 'Error: Cantidad solicitad no disponible!');
         }
 
-        return 'error';
-    }
+        Sale::create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $product->stock = $product->stock - $request->amount;
+        $product->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->with('success', 'Venta realizada exitosamente!'); 
     }
 }

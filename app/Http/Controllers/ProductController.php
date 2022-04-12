@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         Product::create($request->all());
 
-        return back();
+        return back()->with('success', 'Producto agregado!');
     }
 
     /**
@@ -55,7 +55,7 @@ class ProductController extends Controller
     {
         $product->update($request->all());
 
-        return back();
+        return back()->with('success', 'Producto actualizado exitosamente!');
     }
 
     /**
